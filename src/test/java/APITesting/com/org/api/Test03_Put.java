@@ -1,0 +1,43 @@
+/**
+ * 
+ */
+package APITesting.com.org.api;
+
+/**
+ * @author nelakurti.1
+ *
+ */
+
+import static io.restassured.RestAssured.given;
+import org.json.simple.JSONObject;
+import org.testng.annotations.Test;
+
+public class Test03_Put {
+
+	@Test
+	public void test2() {
+		
+		given().
+		get("https://reqres.in/api/users/2").
+		then().statusCode(200).log().all();
+
+		JSONObject request = new JSONObject();
+		request.put("name", "chaya");
+		request.put("job", "BAA");
+
+		System.out.println(request);
+		System.out.println(request.toString());
+
+		given().
+		body(request.toJSONString()).
+		when().
+		put("https://reqres.in/api/users/2").
+		then().statusCode(200);
+
+		given().
+		get("https://reqres.in/api/users/2").
+		then().statusCode(200).log().all();
+
+	}
+
+}
